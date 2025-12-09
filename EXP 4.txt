@@ -1,0 +1,23 @@
+import numpy as np
+
+def sigmoid(x): return 1/(1+np.exp(-x))
+def dsigmoid(x): return x*(1-x)
+
+X = np.array([[0,0],[0,1],[1,0],[1,1]])
+y = np.array([[0],[1],[1],[0]])
+
+np.random.seed(1)
+W1 = np.random.randn(2,3)
+W2 = np.random.randn(3,1)
+lr = 0.5
+
+for _ in range(5000):
+    l1 = sigmoid(X @ W1)
+    l2 = sigmoid(l1 @ W2)
+    l2d = (y-l2)*dsigmoid(l2)
+    l1d = (l2d @ W2.T)*dsigmoid(l1)
+    W2 += l1.T @ l2d * lr
+    W1 += X.T @ l1d * lr
+
+test = np.array([[1,0]])
+print(sigmoid(sigmoid(test @ W1) @ W2))

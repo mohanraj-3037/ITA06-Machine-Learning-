@@ -1,0 +1,19 @@
+import numpy as np
+data = np.array([1, 2, 3, 10, 11, 12])
+mu = np.array([2.0, 10.0])
+sigma = np.array([1.0, 1.0])
+pi = np.array([0.5, 0.5])
+n_iter = 10
+for _ in range(n_iter):
+    # E-step: responsibilities
+    resp = np.array([pi[k] * (1/np.sqrt(2*np.pi*sigma[k]**2)) * 
+                     np.exp(-(data - mu[k])**2/(2*sigma[k]**2)) for k in range(2)])
+    resp = resp / resp.sum(axis=0)
+    # M-step: update parameters
+    Nk = resp.sum(axis=1)
+    mu = (resp @ data) / Nk
+    sigma = np.sqrt((resp @ (data[:,None]-mu)**2) / Nk)
+    pi = Nk / len(data)
+print("Means:", mu)
+print("Std devs:", sigma)
+print("Weights:", pi)

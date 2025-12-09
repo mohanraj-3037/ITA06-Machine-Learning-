@@ -1,0 +1,16 @@
+import numpy as np
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
+X = np.array([[1],[2],[3],[4],[5]])
+y = np.array([2,4,6,8,11])  # Slight non-linearity
+lin_reg = LinearRegression()
+lin_reg.fit(X, y)
+y_lin = lin_reg.predict(X)
+# Polynomial Regression (degree 2)
+poly = PolynomialFeatures(degree=2)
+X_poly = poly.fit_transform(X)
+poly_reg = LinearRegression()
+poly_reg.fit(X_poly, y)
+y_poly = poly_reg.predict(X_poly)
+print("Linear Prediction:", y_lin)
+print("Polynomial Prediction:", y_poly)

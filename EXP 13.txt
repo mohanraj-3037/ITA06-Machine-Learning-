@@ -1,0 +1,21 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+data = {
+    'Age':[5,3,8,2,7],
+    'Mileage':[50000,30000,80000,20000,70000],
+    'Price':[15000,18000,12000,20000,13000]
+}
+df = pd.DataFrame(data)
+
+X = df[['Age','Mileage']]
+y = df['Price']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+
+model = LinearRegression()
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+
+print("Predicted Prices:", y_pred)
+print("MSE:", mean_squared_error(y_test, y_pred))

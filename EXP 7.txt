@@ -1,0 +1,17 @@
+import numpy as np
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+X = np.array([[0,0],[0,1],[1,0],[1,1]])
+y = np.array([[0],[1],[1],[1]])
+np.random.seed(1)
+W = np.random.randn(2,1)
+b = 0
+lr = 0.1
+for _ in range(10000):
+    z = X @ W + b
+    a = sigmoid(z)
+    dz = a - y
+    W -= lr * X.T @ dz / len(X)
+    b -= lr * np.sum(dz) / len(X
+test = np.array([[1,0]])
+print("Prediction:", sigmoid(test @ W + b))

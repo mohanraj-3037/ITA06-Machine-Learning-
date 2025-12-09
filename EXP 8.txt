@@ -1,0 +1,9 @@
+import numpy as np
+X = np.array([[1],[2],[3],[4],[5]])
+y = np.array([2,4,6,8,10])
+X_b = np.c_[np.ones((X.shape[0],1)), X]
+theta = np.linalg.inv(X_b.T @ X_b) @ X_b.T @y
+X_test = np.array([[6]])
+X_test_b = np.c_[np.ones((X_test.shape[0],1)), X_test]
+y_pred = X_test_b @ theta
+print("Prediction:", y_pred)

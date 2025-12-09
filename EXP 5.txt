@@ -1,0 +1,21 @@
+import numpy as np
+from collections import Counter
+
+def euclidean(a, b):
+    return np.sqrt(np.sum((a-b)**2))
+
+def knn(train_X, train_y, test_X, k=3):
+    y_pred = []
+    for x in test_X:
+        distances = [euclidean(x, tr) for tr in train_X]
+        idx = np.argsort(distances)[:k]
+        votes = [train_y[i] for i in idx]
+        y_pred.append(Counter(votes).most_common(1)[0][0])
+    return y_pred
+
+# Example dataset
+X_train = np.array([[1,2],[2,3],[3,3],[6,5],[7,7]])
+y_train = np.array([0,0,0,1,1])
+X_test = np.array([[3,4],[5,5]])
+
+print(knn(X_train, y_train, X_test, k=3))
